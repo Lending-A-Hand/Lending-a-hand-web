@@ -18,8 +18,8 @@ export default {
   }
 };
 </script>
-<style scoped>
-.home {
+<style>
+.content {
   margin: 0px auto;
   max-width: min(1280px, 100% - 40px);
   width: 100%;
