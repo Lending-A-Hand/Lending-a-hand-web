@@ -1,21 +1,26 @@
 <template>
-  <div class="content">
-    <h1 class="mx-8 my-3">Choose your beneficiary</h1>
+  <div class="PoolPage content">
+    <h1 class="mx-8 my-3 font-medium text-24px">Choose your beneficiary</h1>
     <div class="flex">
-      <DogComponent />
-      <DogComponent />
+      <DogCard v-on:click="goToPool('dog')" />
+      <DogCard />
     </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import DogComponent from "@/components/DogComponent.vue";
+import DogCard from "@/components/DogCard.vue";
 
 export default {
-  name: "Home",
+  name: "PoolPage",
   components: {
-    DogComponent
+    DogCard
+  },
+  methods: {
+    goToPool(pool) {
+      this.$router.push({ path: `/poolinfo/${pool}` });
+    }
   }
 };
 </script>

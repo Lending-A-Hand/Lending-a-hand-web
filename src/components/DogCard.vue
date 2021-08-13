@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full md:w-1/2 poolbox m-6 bg-white rounded-2xl">
+  <div class="DogCard w-full md:w-1/2 poolbox m-6 bg-white rounded-2xl">
     <div class="m-4 h-72  flex rounded-2xl" style="background-color:#FFE153">
       <div class="w-1/4  grid place-items-center">
         <img class="w-40" src="picture/dog.svg" />
@@ -19,7 +19,7 @@
     <div class="flex m-4">
       <div class="w-1/6">
         <div
-          class="min-w-72px grid place-items-center rounded-2xl"
+          class="min-w-72px max-w-90px grid place-items-center rounded-2xl"
           style="background-color:#FFE153;aspect-ratio: 1 / 1; "
         >
           <img class="min-w-60px" src="picture/dogicon.svg" />
@@ -45,7 +45,8 @@ export default {
       Dog_usdEarned: "95,440",
       Dog_supporters: "214"
     };
-  }
+  },
+  methods: {}
 };
 </script>
 
