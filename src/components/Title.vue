@@ -1,6 +1,6 @@
 <template>
   <div class="title flex m-6">
-    <img src="picture/logo.svg" />
+    <img :src="`${BASE_URI}/picture/logo.svg`" />
     <div
       class="m-4 curse-pointer w-32 bg-gray-300 rounded-2xl grid place-content-center"
       v-on:click="clickPools()"
@@ -48,6 +48,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      BASE_URI: location.origin
+    };
+  },
   methods: {
     clickPools() {}
   }

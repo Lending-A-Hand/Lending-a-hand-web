@@ -1,6 +1,6 @@
 <template>
   <div class="PoolPage content">
-    <h1 class="mx-8 my-3 font-medium text-24px">Choose your beneficiary</h1>
+    <h1 class="mx-8 my-3 font-bold text-24px">Choose your beneficiary</h1>
     <div class="flex">
       <DogCard v-on:click="goToPool('dog')" />
       <DogCard />
