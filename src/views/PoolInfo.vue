@@ -1,12 +1,14 @@
 <template>
   <div class="PoolInfo content">
-    <h1>123</h1>
     <DogPoolInfo v-if="currentPool == 'dog'" />
+    <NFTReward />
   </div>
 </template>
 
 <script>
 import DogPoolInfo from "@/components/DogPoolInfo.vue";
+import NFTReward from "@/components/NFTReward.vue";
+
 export default {
   data() {
     return {
@@ -15,7 +17,8 @@ export default {
   },
   name: "PoolInfo",
   components: {
-    DogPoolInfo
+    DogPoolInfo,
+    NFTReward
   },
   mounted() {
     if (this.$route.params.pool != "dog") {
