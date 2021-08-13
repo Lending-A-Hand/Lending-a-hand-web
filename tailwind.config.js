@@ -563,6 +563,7 @@ module.exports = {
       "5xl": "64rem",
       "6xl": "72rem",
       "7xl": "80rem",
+      "90px": "90px",
       full: "100%",
       min: "min-content",
       max: "max-content",
@@ -579,6 +580,8 @@ module.exports = {
       "48px": "48px",
       "60px": "60px",
       "72px": "72px",
+      "96px": "96px",
+      "120px": "120px",
       full: "100%",
       min: "min-content",
       max: "max-content"
