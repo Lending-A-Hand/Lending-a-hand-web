@@ -1,9 +1,12 @@
 <template>
   <div class="title flex m-6">
-    <img :src="`${BASE_URI}/picture/logo.svg`" />
+    <img
+      :src="`${BASE_URI}/picture/logo.svg`"
+      v-on:click="$router.push({ path: '/' })"
+    />
     <div
       class="m-4 cursor-pointer w-32 bg-gray-300 rounded-2xl grid place-content-center"
-      v-on:click="clickPools()"
+      v-on:click="$router.push({ path: `/pool` })"
     >
       <span class="font-semibold text-20px">Pools</span>
     </div>
