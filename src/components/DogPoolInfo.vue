@@ -49,7 +49,7 @@
           <div class="w-3/5  grid place-items-center">
             <div>
               <span class="font-extrabold text-32px">Total Staked</span><br />
-              <span class="font-medium text-32px">{{ totalStaked }} USDC</span>
+              <span class="font-medium text-32px">{{ totalStaked }} USDT</span>
             </div>
           </div>
           <div class="w-2/5">
@@ -64,7 +64,7 @@
           <div class="w-3/5  grid place-items-center">
             <div>
               <span class="font-extrabold text-32px">Total Earned</span><br />
-              <span class="font-medium text-32px">{{ totalStaked }} Bags</span>
+              <span class="font-medium text-32px">{{ totalEarned }} USDT</span>
             </div>
           </div>
           <div class="w-2/5">
@@ -85,10 +85,15 @@ export default {
       introduction:
         "Animal shelter in Taiwan needs your help! Generate interest to supply food for stray food and more. If you’re generated interest exceed XXX USD, You’ll get a free NFT from nft pool!",
       totalStaked: 4129889,
-      totalEarned: 4129889,
+      totalEarned: 0,
       twitterLink: "https://123123",
       websiteLink: "https://123123"
     };
+  },
+
+  async mounted() {
+    const hatStats = await window.rToken.getHatStats(1);
+    this.totalStaked = parseInt(hatStats[1].toString()) / 10**18;
   }
 };
 </script>

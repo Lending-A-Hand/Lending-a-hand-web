@@ -42,12 +42,19 @@ export default {
   data() {
     return {
       BASE_URI: location.origin,
-      Dog_bagsEarned: "4,772",
-      Dog_usdEarned: "95,440",
-      Dog_supporters: "214"
+      Dog_bagsEarned: "0",
+      Dog_usdEarned: "0",
+      Dog_supporters: "0"
     };
   },
-  methods: {}
+  methods: {
+
+  },
+  async mounted() {
+    const hatStats = await window.rToken.getHatStats(1);
+    this.Dog_supporters = hatStats[0];
+    this.Dog_usdEarned = parseInt(hatStats[1].toString()) / 10**18;
+  }
 };
 </script>
 

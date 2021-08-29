@@ -53,9 +53,10 @@
           maxlength="40"
           spellcheck="false"
           class="w-4/5 font-bold outline-none border-none overflow-hidden overflow-ellipsis placeholder-low-emphesis focus:placeholder-primary  text-xl bg-transparent"
+          v-model="amount"
         />
         <div class=" w-1/5">
-          <span class="text-right">DAI</span>
+          <span class="text-right">USDT</span>
         </div>
       </div>
       <div class="inline-flex place-items-center">
@@ -87,7 +88,7 @@
           >{{ YourDeposit }}</span
         >
         <span class="w-1/5 text-18px font-bold grid place-items-center"
-          >DAI</span
+          >USDT</span
         >
       </div>
       <div class="mx-3 h-3 " style="border-bottom:1px solid #000"></div>
@@ -129,20 +130,37 @@ export default {
       thresholdNow: 60,
       YourDeposit: 1000,
       currentlyEarnedText: "Currently Earned",
-      currentlyEarnedAmount: 50,
-      currentlyEarnedUnit: "Bags",
+      currentlyEarnedAmount: 0,
+      currentlyEarnedUnit: "USDT",
       annualEarnedText: "Annual Bags of Food",
-      annualEarnedAmount: 200,
+      annualEarnedAmount: 0,
       annualEarnedUnit: "Bags",
-      stakeFor: "Stake for Pets"
+      stakeFor: "Stake for Pets",
+      amount: 0,
     };
   },
-  mounted() {
+  async mounted() {
     const progressValue = document.querySelector(".Progressbar__value");
     const progress = document.querySelector("progress");
     progressValue.style.width = `${this.thresholdNow}%`;
     progress.value = this.thresholdNow;
+    const accountStats = await window.rToken.getAccountStats(window.accounts[0]);
+    this.YourDeposit = parseFloat(accountStats[1].toString()) / 10**18;
+    this.annualEarnedAmount = this.YourDeposit * 13.6;
+  },
+  methods: {
+    async clickDeposit() {
+      let depositAmount = parseInt(this.amount * 10**18);
+      await window.USDT.approve(window.rToken.address, depositAmount).sendTransaction({ from: window.accounts[0] });
+      await window.rToken.mintWithSelectedHat(depositAmount, 1).sendTransaction({ from: window.accounts[0] });
+    },
+
+    async clickWithdraw() {
+      let withdrawAmount = parseInt(this.amount * 10**18);
+      await window.rToken.redeem(withdrawAmount).sendTransaction({ from: window.accounts[0] });
+    }
   }
+
 };
 </script>
 
