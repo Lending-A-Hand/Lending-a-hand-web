@@ -50,6 +50,9 @@
 </template>
 
 <script>
+import {Conflux} from "js-conflux-sdk";
+import rTokenABI from "../abi/RToken.json";
+
 export default {
   data() {
     return {
@@ -57,7 +60,20 @@ export default {
     };
   },
   methods: {
-    clickPools() {}
+    clickPools() {},
+
+    clickConnect: async () => {
+      window.accounts = await window.conflux.enable();
+      const cfx = new Conflux({networkId: 1});
+      cfx.provider = window.conflux;
+      window.cfx = cfx;
+
+      window.rToken = cfx.Contract({
+        abi: rTokenABI,
+        address: "cfxtest:acbn3mt84c4yf1kw8n28n9kvaswb20wvy6zarr8xn2",
+      })
+      // window.nftPool = cfx.Contract({ abi: , address: })
+    }
   }
 };
 </script>
