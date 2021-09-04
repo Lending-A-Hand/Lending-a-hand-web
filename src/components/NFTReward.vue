@@ -24,7 +24,7 @@
         <div
           class="m-4 cursor-pointer w-32 rounded-2xl grid place-content-center py-2"
           style="background-color:#FF7676"
-          v-on:click="clickExplore()"
+          v-on:click="goToNFTPool(poolName)"
         >
           <span class="font-semibold text-20px">Explore</span>
         </div>
@@ -125,6 +125,7 @@ export default {
   data() {
     return {
       BASE_URI: location.origin,
+      poolName: "dog",
       thresholdTarget: 100,
       thresholdNow: 60,
       YourDeposit: 1000,
@@ -142,6 +143,11 @@ export default {
     const progress = document.querySelector("progress");
     progressValue.style.width = `${this.thresholdNow}%`;
     progress.value = this.thresholdNow;
+  },
+  methods: {
+    goToNFTPool(poolName) {
+      this.$router.push({ path: `/nftpool/${poolName}` });
+    }
   }
 };
 </script>

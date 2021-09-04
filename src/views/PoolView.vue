@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     goToPool(pool) {
-      this.$router.push({ path: `/poolinfo/${pool}` });
+      this.$router.push({ path: `/pool/${pool}` });
     }
   }
 };
