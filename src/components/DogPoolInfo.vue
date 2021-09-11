@@ -84,7 +84,7 @@ export default {
       title: "Bags of pet food pellets",
       introduction:
         "Animal shelter in Taiwan needs your help! Generate interest to supply food for stray food and more. If you’re generated interest exceed XXX USD, You’ll get a free NFT from nft pool!",
-      totalStaked: 4129889,
+      totalStaked: 0,
       totalEarned: 0,
       twitterLink: "https://123123",
       websiteLink: "https://123123"

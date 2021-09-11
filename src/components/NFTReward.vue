@@ -140,13 +140,17 @@ export default {
     };
   },
   async mounted() {
+    const accountStats = await window.rToken.getAccountStats(window.accounts[0]);
+    const threshold = (await window.NftPool.getPoolStat(window.rToken.address))[5][0];
+    const cumulative = await window.NftPool.mockCumulativeInterest(window.accounts[0]);
+    this.thresholdNow = parseInt(cumulative.toString());
+    this.thresholdTarget = parseInt(threshold);
+    this.YourDeposit = parseFloat(accountStats[1].toString()) / 10**18;
+    this.annualEarnedAmount = this.YourDeposit * 13.6;
     const progressValue = document.querySelector(".Progressbar__value");
     const progress = document.querySelector("progress");
     progressValue.style.width = `${this.thresholdNow}%`;
     progress.value = this.thresholdNow;
-    const accountStats = await window.rToken.getAccountStats(window.accounts[0]);
-    this.YourDeposit = parseFloat(accountStats[1].toString()) / 10**18;
-    this.annualEarnedAmount = this.YourDeposit * 13.6;
   },
   methods: {
     async clickDeposit() {
@@ -158,6 +162,14 @@ export default {
     async clickWithdraw() {
       let withdrawAmount = parseInt(this.amount * 10**18);
       await window.rToken.redeem(withdrawAmount).sendTransaction({ from: window.accounts[0] });
+    },
+
+    async clickClaim() {
+      const canClaim = await window.NftPool.canClaim(window.accounts[0], window.rToken.address);
+      console.log("Can claim:", canClaim);
+      if (canClaim) {
+        await window.NftPool.claimNFT(window.rToken.address).sendTransaction({ from: window.accounts[0] });
+      }
     }
   }
 

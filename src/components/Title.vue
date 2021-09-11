@@ -53,6 +53,7 @@
 import {Conflux} from "js-conflux-sdk";
 import rTokenABI from "../abi/RToken.json";
 import USDTABI from "../abi/USDT.json";
+import NftPool from "../abi/NftPool.json";
 
 export default {
   data() {
@@ -77,7 +78,10 @@ export default {
         abi: USDTABI,
         address: "cfxtest:acd7wfr80hvee4b1mawa3e8g7ky348n7cawzubzmuw",
       })
-      // window.nftPool = cfx.Contract({ abi: , address: })
+      window.NftPool = cfx.Contract({
+        abi: NftPool,
+        address: "cfxtest:acd04frxz15j00mcb4tuyuxb1jh0cwtg16kj1kns54",
+      })
     }
   }
 };
