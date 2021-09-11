@@ -24,7 +24,7 @@
         <div
           class="m-4 cursor-pointer w-32 rounded-2xl grid place-content-center py-2"
           style="background-color:#FF7676"
-          v-on:click="clickExplore()"
+          v-on:click="goToNFTPool(poolName)"
         >
           <span class="font-semibold text-20px">Explore</span>
         </div>
@@ -126,6 +126,7 @@ export default {
   data() {
     return {
       BASE_URI: location.origin,
+      poolName: "dog",
       thresholdTarget: 100,
       thresholdNow: 60,
       YourDeposit: 1000,
@@ -170,6 +171,10 @@ export default {
       if (canClaim) {
         await window.NftPool.claimNFT(window.rToken.address).sendTransaction({ from: window.accounts[0] });
       }
+    },
+
+    goToNFTPool(poolName) {
+      this.$router.push({ path: `/nftpool/${poolName}` });
     }
   }
 

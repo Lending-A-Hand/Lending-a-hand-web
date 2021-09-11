@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
-import PoolPage from "../views/PoolPage.vue";
+import PoolView from "../views/PoolView.vue";
 import PoolInfo from "../views/PoolInfo.vue";
+import NFTPool from "../views/NFTPool.vue";
 
 const routes = [
   {
@@ -11,18 +12,23 @@ const routes = [
   },
   {
     path: "/pool",
-    name: "PoolPage",
-    component: PoolPage
+    name: "PoolView",
+    component: PoolView
     // route level code-splitting
-    // this generates a separate chunk (PoolPage.[hash].js) for this route
+    // this generates a separate chunk (PoolView.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     // component: () =>
-    // import(/* webpackChunkName: "PoolPage" */ "../views/PoolPage.vue")
+    // import(/* webpackChunkName: "PoolView" */ "../views/PoolView.vue")
   },
   {
-    path: "/poolinfo/:pool",
+    path: "/pool/:pool",
     name: "PoolInfo",
     component: PoolInfo
+  },
+  {
+    path: "/nftpool/:nftpool",
+    name: "NFTPool",
+    component: NFTPool
   }
 ];
 
