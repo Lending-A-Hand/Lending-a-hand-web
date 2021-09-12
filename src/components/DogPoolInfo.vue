@@ -81,19 +81,20 @@ export default {
   data() {
     return {
       BASE_URI: location.origin,
-      title: "Bags of pet food pellets",
+      title: "Bagged Pet Feeds",
       introduction:
-        "Animal shelter in Taiwan needs your help! Generate interest to supply food for stray food and more. If you’re generated interest exceed XXX USD, You’ll get a free NFT from nft pool!",
+        "By generating interest to help buy feed for stray animals, you also get an animal nft for every $100 of interest generated.",
       totalStaked: 0,
       totalEarned: 0,
-      twitterLink: "https://123123",
-      websiteLink: "https://123123"
+      twitterLink: "https://twtter.com/adopastray",
+      websiteLink: "https://adoptastray.com/",
     };
   },
 
   async mounted() {
     const hatStats = await window.rToken.getHatStats(1);
     this.totalStaked = parseInt(hatStats[1].toString()) / 10**18;
+    this.totalEarned = parseInt(await window.NftPool.mockCumulativeInterest(window.accounts[0]));
   }
 };
 </script>

@@ -144,6 +144,8 @@ export default {
     const accountStats = await window.rToken.getAccountStats(window.accounts[0]);
     const threshold = (await window.NftPool.getPoolStat(window.rToken.address))[5][0];
     const cumulative = await window.NftPool.mockCumulativeInterest(window.accounts[0]);
+    this.currentlyEarnedAmount = parseInt(cumulative);
+
     this.thresholdNow = parseInt(cumulative.toString());
     this.thresholdTarget = parseInt(threshold);
     this.YourDeposit = parseFloat(accountStats[1].toString()) / 10**18;

@@ -6,7 +6,7 @@
       </div>
       <div class="w-1/2 grid place-items-center">
         <div class="text-center">
-          <span class="text-32px">Bags earned</span><br />
+          <span class="text-32px">USD earned</span><br />
           <span class="font-bold text-40px">{{ Dog_bagsEarned }}</span
           ><br />
           <span class="text-32px">From {{ Dog_usdEarned }} USD</span>
@@ -26,7 +26,6 @@
         </div>
       </div>
       <div class="w-2/3 mx-2 text-center pt-3">
-        <span class="text-24px font-bold">Bags of pet food pellets</span><br />
         <span class="text-24px mr-2">{{ Dog_supporters }}</span>
         <span class="text-24px">supportors</span>
       </div>
@@ -54,6 +53,7 @@ export default {
     const hatStats = await window.rToken.getHatStats(1);
     this.Dog_supporters = parseInt(hatStats[0]);
     this.Dog_usdEarned = parseInt(hatStats[1].toString()) / 10**18;
+    this.Dog_bagsEarned = parseInt(await window.NftPool.mockCumulativeInterest(window.accounts[0]));
   }
 };
 </script>

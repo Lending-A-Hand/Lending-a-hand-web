@@ -2,7 +2,7 @@
   <div class="nft-banner border-2 rounded-2xl w-full flex">
     <div class="w-7/12  h-72 grid place-items-center">
       <h1 class="w-full text-4xl mb-6 text-center">
-        Won NFTs via donation,without Cost!
+        Get NFTs via donation, without a cost!
       </h1>
       <div class=" ">
         <div class="flex">
