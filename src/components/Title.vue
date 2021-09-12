@@ -54,6 +54,7 @@ import {Conflux} from "js-conflux-sdk";
 import rTokenABI from "../abi/RToken.json";
 import USDTABI from "../abi/USDT.json";
 import NftPool from "../abi/NftPool.json";
+import ERC721 from "../abi/CharityNft.json";
 
 export default {
   data() {
@@ -81,6 +82,10 @@ export default {
       window.NftPool = cfx.Contract({
         abi: NftPool,
         address: "cfxtest:acd04frxz15j00mcb4tuyuxb1jh0cwtg16kj1kns54",
+      })
+      window.ERC721 = cfx.Contract({
+        abi: ERC721,
+        address: "cfxtest:acg4n9b4pag40khmke0nn9vznaubtf4wvuc3pya7hm",
       })
     }
   }

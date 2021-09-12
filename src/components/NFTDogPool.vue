@@ -1,7 +1,7 @@
 <template>
   <div class="content flex">
     <div class="flex mb-6">
-      <img class="w-16" :src="`${BASE_URI}/picture/arrow.svg`" />
+      <img class="w-16" :src="`${BASE_URI}/picture/arrow.svg`" v-on:click="goToPool('dog')"/>
       <img class="ml-3 w-16" :src="`${BASE_URI}/picture/dogicon.svg`" />
       <h1 class="ml-6 text-32px font-semibold grid items-center">
         {{ title }}
@@ -24,15 +24,6 @@
                 <span class="font-semibold text-18px">TokenID</span>
                 <br />
                 <span>{{ items.tokenID }}</span>
-              </div>
-              <div
-                class="w-3/5 bg-gray-300 m-2 px-2 py-3 rounded-xl text-center"
-              >
-                <span class="font-semibold text-18px">Provider</span>
-
-                <br />
-
-                <span class="truncate ">{{ items.provider }}</span>
               </div>
             </div>
           </div>
@@ -77,31 +68,26 @@
           <div class="h-3 my-3" style="border-bottom:1px solid #000"></div>
           <li class="flex">
             <div class="w-24">
-              <span class="text-18px font-semibold">TokenID:</span>
-            </div>
-            <span class="ml-3 text-18px font-semibold mr-3 ">
-              {{ providerTokenID }}
-            </span>
-          </li>
-          <div class="h-3 my-3" style="border-bottom:1px solid #000"></div>
-          <li class="flex">
-            <div class="w-24">
-              <span class="text-18px font-semibold">Discription:</span>
+              <span class="text-18px font-semibold">Description:</span>
             </div>
             <textarea
               rows="2"
               class="ml-3 text-18px font-semibold mr-3  border-2 rounded-md border-gray-500 p-1"
-              v-model="providerDiscription"
+              v-model="providerDescription"
+            />
+          </li>
+          <div class="h-3 my-3" style="border-bottom:1px solid #000"></div>
+          <li class="flex">
+            <div class="w-24">
+              <span class="text-18px font-semibold">Image URL:</span>
+            </div>
+            <input
+              class="ml-3 text-18px font-semibold mr-3  border-2 rounded-md border-gray-500 p-1"
+              v-model="imageURL"
             />
           </li>
           <div class="h-3 my-3" style="border-bottom:1px solid #000"></div>
         </ul>
-        <div class="m-3">
-          <div class="grid place-items-center">
-            <img :src="previewImage" class="uploading-image mt-3" />
-            <input type="file" accept="image/*" @change="uploadImage" />
-          </div>
-        </div>
         <div class="text-center pb-6">
           <button
             v-on:click="submit()"
@@ -119,62 +105,60 @@
 export default {
   data() {
     return {
-      title: "Bags of pet food pellets",
+      title: "Back to Dog Pool~~~~~~~~~~~~",
       previewImage: null,
       BASE_URI: location.origin,
-      providerName: "Jack",
-      providerAddress: "D7CNqkRG8LWxxxxxxxxxxxxxxxxozDJLRGLBSo6BNVxB",
-      providerNFTName: "WOW",
-      providerTokenID: 344,
-      providerDiscription: "This is a cute dog",
-      NFTs: [
-        {
-          img: `${location.origin}/picture/dogpic.svg`,
-          tokenID: "323",
-          provider: "D7CNqxxxx...."
-        },
-        {
-          img: `${location.origin}/picture/dogpic.svg`,
-          tokenID: "324",
-          provider: "D7CNqxxxx"
-        },
-        {
-          img: `${location.origin}/picture/dogpic.svg`,
-          tokenID: "325",
-          provider: "D7CNqxxxx"
-        },
-        {
-          img: `${location.origin}/picture/dogpic.svg`,
-          tokenID: "326",
-          provider: "D7CNqxxxx"
-        },
-        {
-          img: `${location.origin}/picture/dogpic.svg`,
-          tokenID: "327",
-          provider: "D7CNqxxxx"
-        },
-        {
-          img: `${location.origin}/picture/dogpic.svg`,
-          tokenID: "328",
-          provider: "D7CNqxxxx"
-        }
-      ]
+      providerName: "",
+      providerAddress: "Connect to wallet",
+      providerNFTName: "",
+      providerDescription: "This is a cute dog",
+      imageURL: "",
+      NFTs: [],
     };
   },
   name: "NFTPoolPage",
-  mounted() {
-    this.providerAddress = `${this.providerAddress.substring(0, 15)}...`;
+  async mounted() {
+    const tokens = await window.NftPool.getPoolToken(window.rToken.address);
+    for (let i = 0; i < tokens.length; i++) {
+      const url = await window.ERC721.tokenURI(tokens[i]);
+      const obj = await (await fetch(url)).json();
+      this.NFTs.push({
+        img: obj.image,
+        tokenID: tokens[i],
+      });
+    }
+    this.providerAddress = window.accounts[0];
   },
   methods: {
-    uploadImage(e) {
-      const image = e.target.files[0];
-      const reader = new FileReader();
-      reader.readAsDataURL(image);
-      reader.onload = (e) => {
-        this.previewImage = e.target.result;
-        console.log(this.previewImage);
-      };
+    async submit() {
+      const res = await this.axios.post(
+        "https://api.jsonbin.io/v3/b",
+        {
+          description: this.providerDescription,
+          image: this.imageURL,
+          name: this.providerNFTName,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-Master-Key": "$2b$10$MxyDmiGD7nWGB9Qi7amIsOTD0jOL18F4Us6QVw5rJ4pURRpv6BVN6",
+            "X-Bin-Private": false,
+          },
+        }
+      )
+      const id = res.data.metadata.id;
+      const metadata = "https://api.jsonbin.io/b/" + id;
+
+      await window.NftPool.poolMintToken("cfxtest:acbn3mt84c4yf1kw8n28n9kvaswb20wvy6zarr8xn2", metadata)
+        .sendTransaction({
+          from: window.accounts[0]
+        });
+    },
+
+    goToPool(poolName) {
+      this.$router.push({ path: `/pool/${poolName}` });
     }
+
   }
 };
 </script>

@@ -52,7 +52,7 @@ export default {
   },
   async mounted() {
     const hatStats = await window.rToken.getHatStats(1);
-    this.Dog_supporters = hatStats[0];
+    this.Dog_supporters = parseInt(hatStats[0]);
     this.Dog_usdEarned = parseInt(hatStats[1].toString()) / 10**18;
   }
 };
